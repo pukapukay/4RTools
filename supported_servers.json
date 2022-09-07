@@ -383,5 +383,12 @@
         "site": "https://elvesro.com/",
         "hpAddress": "0x00F4840C",
         "nameAddress": "0x00F4AD50"
+    },
+        {
+        "name": "IrissClassic",
+        "description": "IrissClassic",
+        "site": "https://irisclassic-2002.com/",
+        "hpAddress": "0x010DCE10",
+        "nameAddress": "0x010DF5D8"
     }
 ]
