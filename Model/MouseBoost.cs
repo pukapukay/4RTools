@@ -39,15 +39,18 @@ namespace _4RTools.Model
         {
             if (this.toggleKey != Key.None && Keyboard.IsKeyDown(this.toggleKey))
             {
-                Point currentPos = System.Windows.Forms.Cursor.Position;
-                
-                // Send WM_MOUSEMOVE message to the game client
-                // lParam format: low-order word is x, high-order word is y
-                int lParam = (currentPos.Y << 16) | (currentPos.X & 0xFFFF);
-                
-                Interop.PostMessage(roClient.process.MainWindowHandle, Constants.WM_MOUSEMOVE, 0, lParam);
-                
-                Thread.Sleep(this.moveSpeed);
+                while (Keyboard.IsKeyDown(this.toggleKey))
+                {
+                    Point currentPos = System.Windows.Forms.Cursor.Position;
+                    
+                    // Send WM_MOUSEMOVE message to the game client
+                    // lParam format: low-order word is x, high-order word is y
+                    int lParam = (currentPos.Y << 16) | (currentPos.X & 0xFFFF);
+                    
+                    Interop.PostMessage(roClient.process.MainWindowHandle, Constants.WM_MOUSEMOVE, 0, lParam);
+                    
+                    Thread.Sleep(this.moveSpeed);
+                }
             }
             return 0;
         }
