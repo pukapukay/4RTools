@@ -37,27 +37,40 @@ namespace _4RTools.Model
 
         private int MouseBoostThreadExecution(Client roClient)
         {
-            if (this.toggleKey != Key.None && Keyboard.IsKeyDown(this.toggleKey))
+            try
             {
-                while (Keyboard.IsKeyDown(this.toggleKey))
+                if (this.toggleKey != Key.None && Keyboard.IsKeyDown(this.toggleKey))
                 {
-                    Point currentPos = System.Windows.Forms.Cursor.Position;
-                    
-                    // Send WM_MOUSEMOVE message to the game client
-                    // lParam format: low-order word is x, high-order word is y
-                    int lParam = (currentPos.Y << 16) | (currentPos.X & 0xFFFF);
-                    
-                    Interop.PostMessage(roClient.process.MainWindowHandle, Constants.WM_MOUSEMOVE, 0, lParam);
-                    
-                    Thread.Sleep(this.moveSpeed);
+                    while (Keyboard.IsKeyDown(this.toggleKey))
+                    {
+                        Point currentPos = System.Windows.Forms.Cursor.Position;
+                        
+                        // Send WM_MOUSEMOVE message to the game client
+                        // lParam format: low-order word is x, high-order word is y
+                        // Ensure coordinates fit within 16-bit signed integer range
+                        int x = Math.Max(0, Math.Min(currentPos.X, 0x7FFF));
+                        int y = Math.Max(0, Math.Min(currentPos.Y, 0x7FFF));
+                        int lParam = (y << 16) | (x & 0xFFFF);
+                        
+                        Interop.PostMessage(roClient.process.MainWindowHandle, Constants.WM_MOUSEMOVE, 0, lParam);
+                        
+                        Thread.Sleep(this.moveSpeed);
+                    }
                 }
+            }
+            catch (Exception)
+            {
+                // Handle any exceptions to prevent thread crashes
             }
             return 0;
         }
 
         public void Stop()
         {
-            _4RThread.Stop(this.thread);
+            if (this.thread != null)
+            {
+                _4RThread.Stop(this.thread);
+            }
         }
     }
 }
