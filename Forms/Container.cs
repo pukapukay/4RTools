@@ -37,6 +37,7 @@ namespace _4RTools.Forms
             SetSongMacroWindow();
             SetATKDEFWindow();
             SetMacroSwitchWindow();
+            SetMouseBoostWindow();
         }
 
         public void SetToggleApplicationStateWindow()
@@ -140,6 +141,16 @@ namespace _4RTools.Forms
             frm.Location = new Point(0, 65);
             frm.MdiParent = this;
             addform(this.tabMacroSwitch, frm);
+            frm.Show();
+        }
+
+        public void SetMouseBoostWindow()
+        {
+            MouseBoostForm frm = new MouseBoostForm(subject);
+            frm.FormBorderStyle = FormBorderStyle.None;
+            frm.Location = new Point(0, 65);
+            frm.MdiParent = this;
+            addform(this.tabMouseBoost, frm);
             frm.Show();
         }
 
