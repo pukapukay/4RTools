@@ -30,6 +30,7 @@ This project was created using Visual Studio 2022, just open `4RTools.sln` in Vi
 - [x] Autobuff skills
 - [x] Song Macro
 - [x] Macro Switch/Macro Chain
+- [x] Mouse Boost
 
 #### References
 https://github.com/k1ngJ/dtAP
